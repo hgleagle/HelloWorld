@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://jasonfly.com/"/>
   <updated>2017-11-03T04:39:50.268Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://jasonfly.com/</id>
   
   <author>
     <name>Jason He</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2017/11/03/hello-world/"/>
-    <id>http://yoursite.com/2017/11/03/hello-world/</id>
+    <link href="http://jasonfly.com/2017/11/03/hello-world/"/>
+    <id>http://jasonfly.com/2017/11/03/hello-world/</id>
     <published>2017-11-03T04:39:50.268Z</published>
     <updated>2017-11-03T04:39:50.268Z</updated>
     
