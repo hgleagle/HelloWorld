@@ -3,12 +3,17 @@
 
     <sitemap>
         <loc>http://jasonfly.me/post-sitemap.xml</loc>
-        <lastmod>2017-11-03T04:39:50.268Z</lastmod>
+        <lastmod>2017-11-05T14:41:01.521Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>http://jasonfly.me/page-sitemap.xml</loc>
-        <lastmod>2017-11-03T06:06:31.067Z</lastmod>
+        <lastmod>2017-11-06T06:03:22.799Z</lastmod>
+    </sitemap>
+
+    <sitemap>
+        <loc>http://jasonfly.me/tag-sitemap.xml</loc>
+        <lastmod>2017-11-05T14:41:01.521Z</lastmod>
     </sitemap>
 
 </sitemapindex>

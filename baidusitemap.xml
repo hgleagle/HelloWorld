@@ -5,12 +5,29 @@
     
     
   <url>
-    <loc>http://jasonfly.me/2017/11/03/hello-world/</loc>
-    <lastmod>2017-11-03T04:39:50.268Z</lastmod>
+    <loc>http://jasonfly.me/2017/11/05/hexo-blog%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2017-11-05T14:41:01.521Z</lastmod>
+    <data>
+        <display>
+        <title>hexo blog搭建</title>
+        <pubTime>2017-11-05T14:36:26.000Z</pubTime>
+        
+        <tag>hexo</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jasonfly.me/2017/11/05/hello-world/</loc>
+    <lastmod>2017-11-05T09:33:28.297Z</lastmod>
     <data>
         <display>
         <title>Hello World</title>
-        <pubTime>2017-11-03T04:39:50.268Z</pubTime>
+        <pubTime>2017-11-05T09:33:28.297Z</pubTime>
         
          
            
@@ -18,4 +35,5 @@
     </data>
     </url>
 
+    
 </urlset>
