@@ -6,20 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://jasonfly.me">
-  <title>Jason&#39;s blog</title>
+  <title>lorawan基站开发 | Jason&#39;s blog</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-  <meta name="description" content="title: lorawan基站开发 tags:  [lora, embedded, C] categories: [嵌入式开发]  这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 ##架构  思路 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动">
+  <meta name="description" content="[toc] 这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 架构 步骤 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动 移植 Semtech 公司开源的 packet_forwarder 到 OpenWRT 平台，对接通用的 LoRaWAN Serv">
+<meta name="keywords" content="lora,OpenWRT,C">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jason&#39;s blog">
+<meta property="og:title" content="lorawan基站开发">
 <meta property="og:url" content="http://jasonfly.me/2017/11/30/lora基站开发/index.html">
 <meta property="og:site_name" content="Jason&#39;s blog">
-<meta property="og:description" content="title: lorawan基站开发 tags:  [lora, embedded, C] categories: [嵌入式开发]  这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 ##架构  思路 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动">
+<meta property="og:description" content="[toc] 这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 架构 步骤 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动 移植 Semtech 公司开源的 packet_forwarder 到 OpenWRT 平台，对接通用的 LoRaWAN Serv">
 <meta property="og:image" content="http://jasonfly.me/2017/11/30/img/1474594710711.png">
 <meta property="og:image" content="http://jasonfly.me/2017/11/30/img/1512043234704.png">
-<meta property="og:updated_time" content="2017-11-30T12:08:03.000Z">
+<meta property="og:updated_time" content="2017-11-30T12:21:41.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jason&#39;s blog">
-<meta name="twitter:description" content="title: lorawan基站开发 tags:  [lora, embedded, C] categories: [嵌入式开发]  这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 ##架构  思路 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动">
+<meta name="twitter:title" content="lorawan基站开发">
+<meta name="twitter:description" content="[toc] 这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 架构 步骤 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动 移植 Semtech 公司开源的 packet_forwarder 到 OpenWRT 平台，对接通用的 LoRaWAN Serv">
 <meta name="twitter:image" content="http://jasonfly.me/2017/11/30/img/1474594710711.png">
   
   
@@ -146,17 +147,23 @@
             <article id="post-lora基站开发" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+        <h1 class="article-title" itemprop="name">
+      lorawan基站开发
+    </h1>
+        
+        <a href="/2017/11/30/lora基站开发/" class="archive-article-date">
+  	<time datetime="2017-11-30T12:21:41.787Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-30</time>
+</a>
+        
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<p>title: lorawan基站开发</p>
-<p>tags:  [lora, embedded, C]</p>
-<p>categories: [嵌入式开发]</p>
-<hr>
+        <p>[toc]</p>
 <p>这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。</p>
-<p>##架构</p>
-<ul>
-<li>思路<ul>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ul>
+<li>步骤<ul>
 <li>CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略</li>
 <li>调试 SX1301 芯片驱动</li>
 <li>移植 Semtech 公司开源的 <code>packet_forwarder</code> 到 OpenWRT 平台，对接通用的 LoRaWAN Server</li>
@@ -170,8 +177,7 @@
 </ul>
 </li>
 </ul>
-<p>##LoRa 芯片驱动调试</p>
-<p>AR9531 可以通过 USB 或 SPI 驱动 SX1301，USB方式需要FTDI转 SPI 芯片方式网上教程较多。由于板子限制，这里采用 SPI 方式，由于板子的 SPI 控制器已经用来驱动 flash，控制 SX1301 有两种方式：</p>
+<h2 id="LoRa-芯片驱动调试"><a href="#LoRa-芯片驱动调试" class="headerlink" title="LoRa 芯片驱动调试"></a>LoRa 芯片驱动调试</h2><p>AR9531 可以通过 USB 或 SPI 驱动 SX1301，USB方式需要FTDI转 SPI 芯片方式网上教程较多。由于板子限制，这里采用 SPI 方式，由于板子的 SPI 控制器已经用来驱动 flash，控制 SX1301 有两种方式：</p>
 <ul>
 <li>GPIO   模拟 SPI 来控制（软 SPI ）</li>
 <li>实际的硬件 SPI 通过片选控制</li>
@@ -197,8 +203,7 @@
 <p>​</p>
 </li>
 </ul>
-<p>###硬件SPI片选控制</p>
-<p>待完善，主要修订代码 dev-m25p80.c，</p>
+<h3 id="硬件SPI片选控制"><a href="#硬件SPI片选控制" class="headerlink" title="硬件SPI片选控制"></a>硬件SPI片选控制</h3><p>待完善，主要修订代码 dev-m25p80.c，</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">+<span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">ath79_spi_controller_data</span> <span class="title">ath79_spi_cdata0</span> =</span></div><div class="line"><span class="class">+&#123;</span></div><div class="line">+	.cs_type = ATH79_SPI_CS_TYPE_INTERNAL,</div><div class="line">+	.cs_line = <span class="number">0</span>,</div><div class="line">+&#125;;</div><div class="line">+</div><div class="line">+<span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">ath79_spi_controller_data</span> <span class="title">ath79_spi_cdata1</span> =</span></div><div class="line"><span class="class">+&#123;</span></div><div class="line">+	.cs_type = ATH79_SPI_CS_TYPE_GPIO,</div><div class="line">+	.cs_line = <span class="number">2</span>,</div><div class="line">+   .is_flash = <span class="literal">false</span></div><div class="line">+&#125;;</div><div class="line">+</div><div class="line">+<span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">spi_board_info</span> <span class="title">ath79_spi_info_multi</span>[] = &#123;</span></div><div class="line">+	&#123;</div><div class="line">+		.bus_num	= <span class="number">0</span>,</div><div class="line">+		.chip_select	= <span class="number">0</span>,</div><div class="line">+		.max_speed_hz	= <span class="number">25000000</span>,</div><div class="line">+		.modalias	= <span class="string">"m25p80"</span>,</div><div class="line">+		.controller_data = &amp;ath79_spi_cdata0,</div><div class="line">+	&#125;,</div><div class="line">+	&#123;</div><div class="line">+		.bus_num	= <span class="number">0</span>,</div><div class="line">+		.chip_select	= <span class="number">1</span>,</div><div class="line">+		.max_speed_hz   = <span class="number">25000000</span>,</div><div class="line">+		.modalias	= <span class="string">"spidev"</span>,</div><div class="line">+		.controller_data = &amp;ath79_spi_cdata1,</div><div class="line">+	&#125;</div><div class="line">+&#125;;</div><div class="line">+</div><div class="line">+<span class="keyword">void</span> __<span class="function">init <span class="title">ath79_register_m25p80_multidev</span><span class="params">(struct flash_platform_data *pdata)</span></span></div><div class="line">+&#123;</div><div class="line">+	multi_pdata = pdata;</div><div class="line">+	add_mtd_concat_notifier();</div><div class="line">+	ath79_spi_data.bus_num = <span class="number">0</span>;</div><div class="line">+	ath79_spi_data.num_chipselect = <span class="number">2</span>;</div><div class="line">+	ath79_spi_cdata0.is_flash = <span class="literal">false</span>;</div><div class="line">+	ath79_spi_info_multi[<span class="number">0</span>].platform_data = pdata;</div><div class="line">+	ath79_register_spi(&amp;ath79_spi_data, ath79_spi_info_multi, <span class="number">2</span>);</div><div class="line">+&#125;</div></pre></td></tr></table></figure>
 <h2 id="LoRa转发模块移植"><a href="#LoRa转发模块移植" class="headerlink" title="LoRa转发模块移植"></a>LoRa转发模块移植</h2><ul>
 <li><p>编译移植 LoRa 报文转发模块</p>
@@ -227,8 +232,7 @@
 <p>只是原型的话推荐接入 Loriot.io 社区进行调试期间试用， <a href="https://cn1dashboard.loriot.io/login，也可以自己到" target="_blank" rel="external">https://cn1dashboard.loriot.io/login，也可以自己到</a> github 上查找开源相关自己搭建一个。</p>
 </li>
 </ul>
-<p>##有线口回传</p>
-<blockquote>
+<h2 id="有线口回传"><a href="#有线口回传" class="headerlink" title="有线口回传"></a>有线口回传</h2><blockquote>
 <p>参考 <a href="https://wiki.openwrt.org/doc/uci/network" target="_blank" rel="external">https://wiki.openwrt.org/doc/uci/network</a></p>
 </blockquote>
 <p>注意与 4G 回传二选一来配置，ping 不通时，注意查看路由表默认路由是否是4G端口 <code>route -e</code>，DNS 要配，LoRa 报文转发模块默认会解析 server 域名。</p>
@@ -237,13 +241,11 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">config interface 'lan'</div><div class="line">        option ifname 'eth0 eth1 ath0'</div><div class="line">        option type 'bridge'  # 桥模式</div><div class="line">        option force_link '1'</div><div class="line">        option proto 'static'</div><div class="line">        option ipaddr 'xxx.xxx.xxx.xxx'</div><div class="line">        option netmask '255.255.255.0' </div><div class="line">        option gateway 'xxx.xxx.xxx.xxx'</div><div class="line">        option dns 'xxx.xxx.xxx.xxx'</div></pre></td></tr></table></figure>
 <p>重启网络生效</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/network restart</div></pre></td></tr></table></figure>
-<p>##4G模块调试</p>
-<blockquote>
+<h2 id="4G模块调试"><a href="#4G模块调试" class="headerlink" title="4G模块调试"></a>4G模块调试</h2><blockquote>
 <p>参考<br><a href="https://wiki.openwrt.org/doc/recipes/3gdongle" target="_blank" rel="external">https://wiki.openwrt.org/doc/recipes/3gdongle</a></p>
 <p><a href="http://blog.csdn.net/qianguozheng/article/details/50543704" target="_blank" rel="external">http://blog.csdn.net/qianguozheng/article/details/50543704</a><br>4G网卡的拨号方式有三种: PPP (PPP over EV-DO, CDMA, UMTS or GPRS)，QMI (USB modems using QMI protocol)，NCM (USB modems using NCM rotocol)</p>
 </blockquote>
-<p>###配置编译</p>
-<p>使用驱动程序及工具，通过 <code>make menuconfig</code> 里要打开如下模块。</p>
+<h3 id="配置编译"><a href="#配置编译" class="headerlink" title="配置编译"></a>配置编译</h3><p>使用驱动程序及工具，通过 <code>make menuconfig</code> 里要打开如下模块。</p>
 <ul>
 <li>工具<br>comgt </li>
 <li>USB HCI<br>kmod-usb2 (aka EHCI)<br>kmod-usb-ohci<br>kmod-usb-uhci (for example VIA chips)</li>
@@ -253,7 +255,7 @@
 <p>option 驱动加载后，出现 5 个 ttyUSB，PPP 拨号使用 ttyUSB1，AT 命令查询 ttyUSB2，数据通路走 PPP 或 QMI 拨号，两者都要修订代码 option_ids 增加 id，<strong>芯片初始化要注册USB控制器</strong>。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//文件：linux-3.3.8/arch/mips/ath79/mach-ap120-h.c</span></div><div class="line"><span class="comment">//函数：static void __init xxx_setup(void)</span></div><div class="line">ath79_register_usb();</div></pre></td></tr></table></figure>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//文件：linux-3.3.8/drivers/usb/serial/option.c</span></div><div class="line">&#123; USB_DEVICE(LONGSUNG_VENDOR_ID, LONGSUNG_U8300_PRODUCT_ID)&#125;,  <span class="comment">/* add for longsung U8300 LTE modem */</span></div></pre></td></tr></table></figure>
-<p>###PPP 拨号<br>速率支持不是最高，当前状态下够用，3.3.8 内核配置完就可支持，通过 UCI 命令配置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">uci set wan.ifname=ppp0</div><div class="line">uci set wan.device=/dev/ttyUSB1</div><div class="line">uci set wan.apn=3gnet</div><div class="line">uci set wan.service=umts</div><div class="line">uci set wan.dialnumber=*99#</div><div class="line">uci set wan.proto=3g</div><div class="line">uci set wan.defaultroute=1</div></pre></td></tr></table></figure></p>
+<h3 id="PPP-拨号"><a href="#PPP-拨号" class="headerlink" title="PPP 拨号"></a>PPP 拨号</h3><p>速率支持不是最高，当前状态下够用，3.3.8 内核配置完就可支持，通过 UCI 命令配置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">uci set wan.ifname=ppp0</div><div class="line">uci set wan.device=/dev/ttyUSB1</div><div class="line">uci set wan.apn=3gnet</div><div class="line">uci set wan.service=umts</div><div class="line">uci set wan.dialnumber=*99#</div><div class="line">uci set wan.proto=3g</div><div class="line">uci set wan.defaultroute=1</div></pre></td></tr></table></figure></p>
 <p>或者修改 <code>/etc/config/network</code>  增加 ppp0 的 wan 口</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">config interface 'wan'</div><div class="line">        option ifname 'ppp0'</div><div class="line">        option device '/dev/ttyUSB1'</div><div class="line">        option apn    '3gnet'  # 根据运营商变化注：联通apn：3gnet 电信apn：ctnet 移动apn：cmnet/cmwap</div><div class="line">        option service 'umts'  </div><div class="line">        option dialnumber '*99#'   # 联通dialnumber：3G为*99# 电信：3G为#777 移动为：*99***1# LTE为：*99#</div><div class="line">        option proto '3g'</div><div class="line">        option defaultroute '1'</div></pre></td></tr></table></figure>
 <p><code>/etc/init.d/network restart</code>重启网络</p>
@@ -263,8 +265,7 @@
 <p>Gobi 芯片是高通开发的移动宽带 modem，3.3.8 内核需自己移植 <code>GobiNet</code> 驱动，3.4 内核以上系统自身有带 <code>qmi_wwan</code> 驱动，用户空间工具 <code>ofono, uqmi and libqmi</code>，感兴趣的可以看下 <a href="https://sigquit.wordpress.com/2014/06/11/qmiwwan-or-gobinet/" target="_blank" rel="external">https://sigquit.wordpress.com/2014/06/11/qmiwwan-or-gobinet/</a></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">加载模块</span></div><div class="line">insmod /lib/modules/3.3.8/GobiNet.ko</div><div class="line"><span class="meta">#</span><span class="bash">读返回结果</span></div><div class="line">cat /dev/ttyUSB2 &amp;</div><div class="line"><span class="meta">#</span><span class="bash">拨号</span></div><div class="line">echo -e 'at$qcrmcall=1,1\r\n' &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查看出现4g用接口</span></div><div class="line">ifconfig </div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">查询网络服务类型</span></div><div class="line">echo -en "at+psrat\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询手机功能</span></div><div class="line">echo -e "at+cfun?\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询pin是否正常识别或是否有pin码</span></div><div class="line">echo -e "at+cpin?\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询运营商</span></div><div class="line">echo -e "at+cops?\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">返回IMSI号</span></div><div class="line">echo -en "at+cimi\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询IMEI号</span></div><div class="line">echo -e "at+cgsn\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询集成电路卡识别码</span></div><div class="line">echo -e "at+iccid\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询信号质量，返回rssi,rxlevel</span></div><div class="line">echo -e "at+csq\r" &gt; /dev/ttyUSB2 </div><div class="line"><span class="meta">#</span><span class="bash">断开连接</span></div><div class="line">echo -e 'at$qcrmcall=0,1\r\n' &gt; /dev/ttyUSB2</div></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>除了前面提到了，下面罗列一些关于 LoRaWAN 系统搭建可能会用到的代码链接。</p>
-<p>###基站端</p>
-<ul>
+<h3 id="基站端"><a href="#基站端" class="headerlink" title="基站端"></a>基站端</h3><ul>
 <li>Low-cost LoRa gateway with SX1272 and Raspberry</li>
 </ul>
 <ul>
@@ -273,14 +274,13 @@
 <li><p>This is a fork with the needed modifications to be able to use lora_gateway with a Multitech MTAC-LORA (MultiConnect mCard) board instead of a IoT Starter Kit platform.<br><a href="https://github.com/mirakonta/lora_gateway" target="_blank" rel="external">https://github.com/mirakonta/lora_gateway</a></p>
 </li>
 </ul>
-<p>###模组</p>
-<ul>
+<h3 id="模组"><a href="#模组" class="headerlink" title="模组"></a>模组</h3><ul>
 <li><p>Semtech 开源的节点实现代码，MCU基于STM32L151CB，射频SX1272<br><a href="https://github.com/Lora-net/LoRaMac-node" target="_blank" rel="external">https://github.com/Lora-net/LoRaMac-node</a></p>
 </li>
 <li><p>IBM 开源的节点实现代码，BSD License，支持ClassA、B<br><a href="https://www.research.ibm.com/labs/zurich/ics/lrsc/lmic.html" target="_blank" rel="external">https://www.research.ibm.com/labs/zurich/ics/lrsc/lmic.html</a></p>
 </li>
 </ul>
-<p>###LoRaWAN Server<br>lorawan server开源实现，MIT授权，可以参考实现</p>
+<h3 id="LoRaWAN-Server"><a href="#LoRaWAN-Server" class="headerlink" title="LoRaWAN Server"></a>LoRaWAN Server</h3><p>lorawan server开源实现，MIT授权，可以参考实现</p>
 <ul>
 <li><p>go语言 the things network社区，15年10月就开始做了，比较完整<br><a href="https://github.com/TheThingsNetwork/ttn" target="_blank" rel="external">https://github.com/TheThingsNetwork/ttn</a><br>V1版本源码：<a href="https://github.com/TheThingsNetwork/ttn/tree/v1-staging" target="_blank" rel="external">https://github.com/TheThingsNetwork/ttn/tree/v1-staging</a><br>TTN官网：<a href="https://www.thethingsnetwork.org" target="_blank" rel="external">https://www.thethingsnetwork.org</a><br>TTN架构：<a href="https://www.thethingsnetwork.org/wiki/Backend/Overview" target="_blank" rel="external">https://www.thethingsnetwork.org/wiki/Backend/Overview</a><br>ttnctl CLI：<a href="https://www.thethingsnetwork.org/docs/current/cli/" target="_blank" rel="external">https://www.thethingsnetwork.org/docs/current/cli/</a><br>后台：<a href="https://account.thethingsnetwork.org" target="_blank" rel="external">https://account.thethingsnetwork.org</a></p>
 </li>
@@ -289,8 +289,8 @@
 <li><p>erlang语言，适合小型网络使用，只有1个人在开发<br><a href="https://github.com/gotthardp/lorawan-server" target="_blank" rel="external">https://github.com/gotthardp/lorawan-server</a></p>
 </li>
 </ul>
-<p>###Simulation<br><a href="https://sites.google.com/a/wesdec.be/mweyn/lpwan" target="_blank" rel="external">https://sites.google.com/a/wesdec.be/mweyn/lpwan</a></p>
-<p>###Semtech Starter Kit<br><a href="http://semtechlorakit.blogspot.jp/" target="_blank" rel="external">http://semtechlorakit.blogspot.jp/</a></p>
+<h3 id="Simulation"><a href="#Simulation" class="headerlink" title="Simulation"></a>Simulation</h3><p><a href="https://sites.google.com/a/wesdec.be/mweyn/lpwan" target="_blank" rel="external">https://sites.google.com/a/wesdec.be/mweyn/lpwan</a></p>
+<h3 id="Semtech-Starter-Kit"><a href="#Semtech-Starter-Kit" class="headerlink" title="Semtech Starter Kit"></a>Semtech Starter Kit</h3><p><a href="http://semtechlorakit.blogspot.jp/" target="_blank" rel="external">http://semtechlorakit.blogspot.jp/</a></p>
       
 
       
@@ -323,8 +323,34 @@
     </div>
     <div class="article-info article-info-index">
       
-      
-      
+      <div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">lora</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">OpenWRT</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">C</a>
+        		</li>
+      		
+		</ul>
+	</div>
+      <div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/嵌入式开发//" class="article-tag-list-link color1">嵌入式开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
       
 
       
@@ -521,6 +547,18 @@ getOwnMetadataKeys:function(t){return o(i(t),arguments.length<2?void 0:u(argumen
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">lora</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">OpenWRT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">C</a>
               </li>
             
             <div class="clearfix"></div>

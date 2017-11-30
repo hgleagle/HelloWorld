@@ -5,14 +5,23 @@
     
   <url>
     <loc>http://jasonfly.me/2017/11/30/lora%E5%9F%BA%E7%AB%99%E5%BC%80%E5%8F%91/</loc>
-    <lastmod>2017-11-30T12:08:03.000Z</lastmod>
+    <lastmod>2017-11-30T12:21:41.787Z</lastmod>
     <data>
         <display>
-        <title></title>
-        <pubTime>2017-11-30T12:08:15.327Z</pubTime>
+        <title>lorawan基站开发</title>
+        <pubTime>2017-11-30T12:21:41.787Z</pubTime>
         
+        <tag>lora</tag>
+         
+        <tag>OpenWRT</tag>
+         
+        <tag>C</tag>
+         
          
            
+             
+              <breadCrumb title="嵌入式开发" url="http://jasonfly.me/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/"/>
+          
         </display>
     </data>
     </url>
