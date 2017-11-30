@@ -135,13 +135,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Tags</li>
+                        <li>菜单</li>
+                        <li>标签</li>
                         
-                        <li>Friends</li>
+                        <li>友情链接</li>
                         
                         
-                        <li>About Me</li>
+                        <li>关于我</li>
                         
                     </ul>
                 </div>
@@ -259,13 +259,13 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me">
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我">
 </nav>
       <div class="body-wrap"><article id="post-lora基站开发" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2017/11/30/lora基站开发/" class="article-date">
-      <time datetime="2017-11-30T12:46:54.235Z" itemprop="datePublished">2017-11-30</time>
+      <time datetime="2017-11-30T12:52:31.187Z" itemprop="datePublished">2017-11-30</time>
 </a>
     </div>
   
@@ -284,8 +284,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>[toc]</p>
-<p>这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。</p>
+        <p>这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。</p>
 <h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ul>
 <li>步骤<ul>
 <li>CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略</li>
@@ -382,8 +381,8 @@
 <h3 id="PPP-拨号"><a href="#PPP-拨号" class="headerlink" title="PPP 拨号"></a>PPP 拨号</h3><p>速率支持不是最高，当前状态下够用，3.3.8 内核配置完就可支持，通过 UCI 命令配置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">uci set wan.ifname=ppp0</div><div class="line">uci set wan.device=/dev/ttyUSB1</div><div class="line">uci set wan.apn=3gnet</div><div class="line">uci set wan.service=umts</div><div class="line">uci set wan.dialnumber=*99#</div><div class="line">uci set wan.proto=3g</div><div class="line">uci set wan.defaultroute=1</div></pre></td></tr></table></figure></p>
 <p>或者修改 <code>/etc/config/network</code>  增加 ppp0 的 wan 口</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">config interface 'wan'</div><div class="line">        option ifname 'ppp0'</div><div class="line">        option device '/dev/ttyUSB1'</div><div class="line">        option apn    '3gnet'  # 根据运营商变化注：联通apn：3gnet 电信apn：ctnet 移动apn：cmnet/cmwap</div><div class="line">        option service 'umts'  </div><div class="line">        option dialnumber '*99#'   # 联通dialnumber：3G为*99# 电信：3G为#777 移动为：*99***1# LTE为：*99#</div><div class="line">        option proto '3g'</div><div class="line">        option defaultroute '1'</div></pre></td></tr></table></figure>
-<p><code>/etc/init.d/network restart</code>重启网络</p>
-<p> <code>ifconfig</code>查看是否出现 3G 端口</p>
+<p><code>/etc/init.d/network restart</code> 重启网络</p>
+<p> <code>ifconfig</code> 查看是否出现 3G 端口</p>
 <h3 id="QMI拨号"><a href="#QMI拨号" class="headerlink" title="QMI拨号"></a>QMI拨号</h3><p>跟 PPP 拨号二选一， <strong>修改代码跳过第四接口不让其被 option 驱动检测到</strong>，加载 GobiNet 模块驱动该口，支持 4G，更高速率，使用时 PPP 拨号要关掉</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//文件：drivers/usb/serial/option.c</span></div><div class="line"><span class="comment">//函数： static int option_probe(struct usb_serial *serial, const struct usb_device_id *id)</span></div><div class="line"><span class="keyword">if</span> (cpu_to_le16(serial-&gt;dev-&gt;descriptor.idVendor) == LONGSUNG_VENDOR_ID &amp;&amp;</div><div class="line">    cpu_to_le16(serial-&gt;dev-&gt;descriptor.idProduct) == LONGSUNG_U8300_PRODUCT_ID &amp;&amp;</div><div class="line">    serial-&gt;interface-&gt;cur_altsetting-&gt;desc.bInterfaceNumber == <span class="number">4</span>) &#123;</div><div class="line">    printk(KERN_INFO<span class="string">"Discover the 4th interface for U8300 NDIS\n"</span>);</div><div class="line">    <span class="keyword">return</span> -ENODEV;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Gobi 芯片是高通开发的移动宽带 modem，3.3.8 内核需自己移植 <code>GobiNet</code> 驱动，3.4 内核以上系统自身有带 <code>qmi_wwan</code> 驱动，用户空间工具 <code>ofono, uqmi and libqmi</code>，感兴趣的可以看下 <a href="https://sigquit.wordpress.com/2014/06/11/qmiwwan-or-gobinet/" target="_blank" rel="external">https://sigquit.wordpress.com/2014/06/11/qmiwwan-or-gobinet/</a></p>
@@ -541,14 +540,14 @@
                 2016-2017 Jason He
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style="display:none">
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -557,7 +556,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style="display:none">
-                        <span id="page-visit" title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit" title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -567,28 +566,14 @@
 </footer>
     </div>
     <script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-<script>
-        $(document).ready(function() {
-            var iPad = window.navigator.userAgent.indexOf('iPad');
-            if (iPad > -1 || $(".left-col").css("display") === "none") {
-                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
-                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
-                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
-            }
-            else {
-                var backgroundnum = 5;
-                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
-            }
-        })
-    </script>
+
 
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide()" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide()" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
