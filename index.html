@@ -265,7 +265,7 @@
   
     <div class="article-meta">
       <a href="/2017/11/30/lora基站开发/" class="article-date">
-      <time datetime="2017-11-30T12:52:31.187Z" itemprop="datePublished">2017-11-30</time>
+      <time datetime="2017-11-30T13:10:39.015Z" itemprop="datePublished">2017-11-30</time>
 </a>
     </div>
   
@@ -389,9 +389,8 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">加载模块</span></div><div class="line">insmod /lib/modules/3.3.8/GobiNet.ko</div><div class="line"><span class="meta">#</span><span class="bash">读返回结果</span></div><div class="line">cat /dev/ttyUSB2 &amp;</div><div class="line"><span class="meta">#</span><span class="bash">拨号</span></div><div class="line">echo -e 'at$qcrmcall=1,1\r\n' &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查看出现4g用接口</span></div><div class="line">ifconfig </div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">查询网络服务类型</span></div><div class="line">echo -en "at+psrat\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询手机功能</span></div><div class="line">echo -e "at+cfun?\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询pin是否正常识别或是否有pin码</span></div><div class="line">echo -e "at+cpin?\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询运营商</span></div><div class="line">echo -e "at+cops?\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">返回IMSI号</span></div><div class="line">echo -en "at+cimi\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询IMEI号</span></div><div class="line">echo -e "at+cgsn\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询集成电路卡识别码</span></div><div class="line">echo -e "at+iccid\r" &gt; /dev/ttyUSB2</div><div class="line"><span class="meta">#</span><span class="bash">查询信号质量，返回rssi,rxlevel</span></div><div class="line">echo -e "at+csq\r" &gt; /dev/ttyUSB2 </div><div class="line"><span class="meta">#</span><span class="bash">断开连接</span></div><div class="line">echo -e 'at$qcrmcall=0,1\r\n' &gt; /dev/ttyUSB2</div></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>除了前面提到了，下面罗列一些关于 LoRaWAN 系统搭建可能会用到的代码链接。</p>
 <h3 id="基站端"><a href="#基站端" class="headerlink" title="基站端"></a>基站端</h3><ul>
-<li>Low-cost LoRa gateway with SX1272 and Raspberry</li>
-</ul>
-<ul>
+<li><p>Low-cost LoRa gateway with SX1272 and Raspberry</p>
+</li>
 <li><p><a href="https://github.com/CongducPham/LowCostLoRaGw" target="_blank" rel="external">https://github.com/CongducPham/LowCostLoRaGw</a></p>
 </li>
 <li><p>This is a fork with the needed modifications to be able to use lora_gateway with a Multitech MTAC-LORA (MultiConnect mCard) board instead of a IoT Starter Kit platform.<br><a href="https://github.com/mirakonta/lora_gateway" target="_blank" rel="external">https://github.com/mirakonta/lora_gateway</a></p>
@@ -515,6 +514,10 @@
 <p>####<br>$ npm install hexo-generator-feed<br>$ npm install hexo-generator-sitemap</p>
 <h4 id="avatar、qrcode"><a href="#avatar、qrcode" class="headerlink" title="avatar、qrcode"></a>avatar、qrcode</h4><p>使用七牛图床，或者本地在source下创建img目录保存图片，修改_config.yml添加外链或路径</p>
 <h4 id="注册绑定自定义域名"><a href="#注册绑定自定义域名" class="headerlink" title="注册绑定自定义域名"></a>注册绑定自定义域名</h4><p>namesilo注册申请域名，只需要35块，赠送whois隐私保护<br>到dnspod绑定域名服务器，创建两个A，一个CNAME记录绑定域名<br><a href="https://www.namesilo.com/create_account.php" target="_blank" rel="external">https://www.namesilo.com/create_account.php</a></p>
+<h4 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h4><p>npm install –save hexo-generator-search</p>
+<h4 id="标签云"><a href="#标签云" class="headerlink" title="标签云"></a>标签云</h4><p>hexo new page tags</p>
+<h4 id="Sitemap-for-SEO"><a href="#Sitemap-for-SEO" class="headerlink" title="Sitemap for SEO:"></a>Sitemap for SEO:</h4><p>Install plugin: hexo-generator-seo-friendly-sitemap</p>
+<p>Baidu: hexo-generator-baidu-sitemap</p>
 <h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h4><p> [ ] 404页面<br> [ ] SEO</p>
       
     </div>
