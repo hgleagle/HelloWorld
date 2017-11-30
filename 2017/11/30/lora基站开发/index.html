@@ -20,13 +20,13 @@
 <meta property="og:url" content="http://jasonfly.me/2017/11/30/lora基站开发/index.html">
 <meta property="og:site_name" content="Jason&#39;s blog">
 <meta property="og:description" content="这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 架构 步骤 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动 移植 Semtech 公司开源的 packet_forwarder 到 OpenWRT 平台，对接通用的 LoRaWAN Server 调试移">
-<meta property="og:image" content="http://jasonfly.me/2017/11/30/img/1474594710711.png">
+<meta property="og:image" content="http://jasonfly.me/img/1474594710711.png">
 <meta property="og:image" content="http://jasonfly.me/2017/11/30/img/1512043234704.png">
-<meta property="og:updated_time" content="2017-11-30T13:10:39.011Z">
+<meta property="og:updated_time" content="2017-11-30T13:25:58.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lorawan基站开发">
 <meta name="twitter:description" content="这篇文章主要记录lora原型基站开发的过程，基站支持对接市场上默认的 LoRaWAN Server，支持有线口回传，支持4G回传。 架构 步骤 CPU 移植运行 OpenWRT  系统，有线口正常，这块我是基于现成的，此处省略 调试 SX1301 芯片驱动 移植 Semtech 公司开源的 packet_forwarder 到 OpenWRT 平台，对接通用的 LoRaWAN Server 调试移">
-<meta name="twitter:image" content="http://jasonfly.me/2017/11/30/img/1474594710711.png">
+<meta name="twitter:image" content="http://jasonfly.me/img/1474594710711.png">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -268,7 +268,7 @@
   
     <div class="article-meta">
       <a href="/2017/11/30/lora基站开发/" class="article-date">
-      <time datetime="2017-11-30T13:10:39.015Z" itemprop="datePublished">2017-11-30</time>
+      <time datetime="2017-11-30T13:25:58.326Z" itemprop="datePublished">2017-11-30</time>
 </a>
     </div>
   
@@ -309,7 +309,7 @@
 <li>硬件组成：CPU 使用 SOC AR95xx 系列芯片，通过 SPI 接口跟基带芯片通信，LoRa 基带射频使用 Semtech 公司的多路芯片 SX1301 + SX1255，4G 模组使用龙尚 U8300</li>
 <li>软件：平台 OpenWRT ，版本 Attitude Adjustment 12.09，内核 3.3.8</li>
 <li>报文流程<ul>
-<li>AR95xx 通过 <code>HAL</code> 模块的 SPI 读写操作控制 SX1301 接收终端发送的报文，经过 <code>packet forwarder</code> 模块封装打包后走有线口、WIFI 或 4G 通路，通过UDP方式发送给后台 LoRaWAN Server<br><img src="../img/1474594710711.png" alt=".1474594710711"></li>
+<li>AR95xx 通过 <code>HAL</code> 模块的 SPI 读写操作控制 SX1301 接收终端发送的报文，经过 <code>packet forwarder</code> 模块封装打包后走有线口、WIFI 或 4G 通路，通过UDP方式发送给后台 LoRaWAN Server<br><img src="/img/1474594710711.png" alt=".1474594710711"></li>
 </ul>
 </li>
 </ul>
@@ -434,8 +434,8 @@
     <div class="copyright">
         <p><span>本文标题:</span><a href="/2017/11/30/lora基站开发/">lorawan基站开发</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Jason He</a></p>
-        <p><span>发布时间:</span>2017-11-30, 21:10:39</p>
-        <p><span>最后更新:</span>2017-11-30, 21:10:39</p>
+        <p><span>发布时间:</span>2017-11-30, 21:25:58</p>
+        <p><span>最后更新:</span>2017-11-30, 21:25:58</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/11/30/lora基站开发/" title="lorawan基站开发">http://jasonfly.me/2017/11/30/lora基站开发/</a>
             <span class="copy-path" data-clipboard-text="原文: http://jasonfly.me/2017/11/30/lora基站开发/　　作者: Jason He" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

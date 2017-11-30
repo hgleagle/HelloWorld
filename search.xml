@@ -17,7 +17,7 @@
 <li>硬件组成：CPU 使用 SOC AR95xx 系列芯片，通过 SPI 接口跟基带芯片通信，LoRa 基带射频使用 Semtech 公司的多路芯片 SX1301 + SX1255，4G 模组使用龙尚 U8300</li>
 <li>软件：平台 OpenWRT ，版本 Attitude Adjustment 12.09，内核 3.3.8</li>
 <li>报文流程<ul>
-<li>AR95xx 通过 <code>HAL</code> 模块的 SPI 读写操作控制 SX1301 接收终端发送的报文，经过 <code>packet forwarder</code> 模块封装打包后走有线口、WIFI 或 4G 通路，通过UDP方式发送给后台 LoRaWAN Server<br><img src="../img/1474594710711.png" alt=".1474594710711"></li>
+<li>AR95xx 通过 <code>HAL</code> 模块的 SPI 读写操作控制 SX1301 接收终端发送的报文，经过 <code>packet forwarder</code> 模块封装打包后走有线口、WIFI 或 4G 通路，通过UDP方式发送给后台 LoRaWAN Server<br><img src="/img/1474594710711.png" alt=".1474594710711"></li>
 </ul>
 </li>
 </ul>
