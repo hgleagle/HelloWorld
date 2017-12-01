@@ -4,7 +4,24 @@
 
     
   <url>
-    <loc>http://jasonfly.me/title/</loc>
+    <loc>http://jasonfly.me/hexo-blog%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2017-12-01T07:07:29.017Z</lastmod>
+    <data>
+        <display>
+        <title>hexo blog搭建</title>
+        <pubTime>2017-11-05T14:36:26.000Z</pubTime>
+        
+        <tag>hexo</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://jasonfly.me/lora%E5%9F%BA%E7%AB%99%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2017-12-01T04:04:21.994Z</lastmod>
     <data>
         <display>
@@ -29,26 +46,9 @@
     
     
     
-  <url>
-    <loc>http://jasonfly.me/title/</loc>
-    <lastmod>2017-11-30T13:18:46.887Z</lastmod>
-    <data>
-        <display>
-        <title>hexo blog搭建</title>
-        <pubTime>2017-11-05T14:36:26.000Z</pubTime>
-        
-        <tag>hexo</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
     
   <url>
-    <loc>http://jasonfly.me/title/</loc>
+    <loc>http://jasonfly.me/hello-world/</loc>
     <lastmod>2017-11-05T09:33:28.000Z</lastmod>
     <data>
         <display>
