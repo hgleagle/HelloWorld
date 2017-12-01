@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://jasonfly.me/about/index.html</loc>
+    
+    <lastmod>2017-12-01T11:23:03.275Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://jasonfly.me/hexo-blog%E6%90%AD%E5%BB%BA/</loc>
     
     <lastmod>2017-12-01T09:57:52.086Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>http://jasonfly.me//404.html</loc>
     
     <lastmod>2017-11-06T06:09:34.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://jasonfly.me/about/index.html</loc>
-    
-    <lastmod>2017-11-05T09:33:28.000Z</lastmod>
     
   </url>
   
