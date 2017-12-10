@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jasonfly.me/"/>
-  <updated>2017-12-01T09:51:53.033Z</updated>
+  <updated>2017-12-10T09:11:11.347Z</updated>
   <id>http://jasonfly.me/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>打开浏览器输入URL时发生了哪些事</title>
+    <link href="http://jasonfly.me/%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5URL%E6%97%B6%E5%8F%91%E7%94%9F%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B/"/>
+    <id>http://jasonfly.me/打开浏览器输入URL时发生了哪些事/</id>
+    <published>2017-12-10T09:11:11.347Z</published>
+    <updated>2017-12-10T09:11:11.347Z</updated>
+    
+    <content type="html"><![CDATA[<p>一道经典的问题，考察对操作系统、网络、web 开发等知识是否能融汇贯通。作为一个网络软件这块的开发人员，一直有兴趣总结下这方面知识，正好最近看了日本作家户根勤写的 <a href="https://book.douban.com/subject/26941639/" target="_blank" rel="external">网络是怎样连接的</a> ， 补足我不少盲点。这篇文章总结该书的关键知识点。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一道经典的问题，考察对操作系统、网络、web 开发等知识是否能融汇贯通。作为一个网络软件这块的开发人员，一直有兴趣总结下这方面知识，正好最近看了日本作家户根勤写的 &lt;a href=&quot;https://book.douban.com/subject/26941639/&quot; tar
+      
+    
+    </summary>
+    
+      <category term="读书笔记" scheme="http://jasonfly.me/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="web" scheme="http://jasonfly.me/tags/web/"/>
+    
+      <category term="networking" scheme="http://jasonfly.me/tags/networking/"/>
+    
+  </entry>
   
   <entry>
     <title>lorawan基站开发</title>
@@ -62,7 +89,7 @@
     <link href="http://jasonfly.me/hexo-blog%E6%90%AD%E5%BB%BA/"/>
     <id>http://jasonfly.me/hexo-blog搭建/</id>
     <published>2017-11-05T14:36:26.000Z</published>
-    <updated>2017-12-01T09:57:52.086Z</updated>
+    <updated>2017-12-10T09:10:36.823Z</updated>
     
     <content type="html"><![CDATA[<h3 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h3><h4 id="安装nvm-nodejs"><a href="#安装nvm-nodejs" class="headerlink" title="安装nvm nodejs"></a>安装nvm nodejs</h4><blockquote><p><a href="https://github.com/creationix/nvm" target="_blank" rel="external">https://github.com/creationix/nvm</a></p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash</div><div class="line">export NVM_DIR="$HOME/.nvm"</div><div class="line">[ -s "$NVM_DIR/nvm.sh" ] &amp;&amp; . "$NVM_DIR/nvm.sh" # This loads nvm</div><div class="line">nvm install node</div><div class="line">nvm use 9.0.0</div></pre></td></tr></table></figure><h4 id="安装运行hexo"><a href="#安装运行hexo" class="headerlink" title="安装运行hexo"></a>安装运行hexo</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org  #淘宝定制命令cnpm替换，使用淘宝源</div><div class="line"></div><div class="line">cnpm install hexo-cli -g</div><div class="line">hexo init blog</div><div class="line">cd blog</div><div class="line">cnpm install</div><div class="line">hexo server --debug  # 运行</div></pre></td></tr></table></figure><h4 id="自动部署github"><a href="#自动部署github" class="headerlink" title="自动部署github"></a>自动部署github</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div><div class="line">在配置文件_config.xml中作如下修改</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:hgleagle/hgleagle.github.io.git</div><div class="line">  branch: master</div><div class="line"></div><div class="line">hexo clean #先清除</div><div class="line">hexo generate #生成静态文件</div><div class="line">hexo deploy # 部署，实现如下命令</div></pre></td></tr></table></figure><p>deploy实际实现如下工作<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cp -R public/* .deploy_git/</div><div class="line">cd .deploy_git</div><div class="line">git add .</div><div class="line">git commit -m “update”</div><div class="line">git push origin master</div></pre></td></tr></table></figure></p><a id="more"></a><h3 id="注册绑定自定义域名"><a href="#注册绑定自定义域名" class="headerlink" title="注册绑定自定义域名"></a>注册绑定自定义域名</h3><p>namesilo 注册申请域名，只需要 35 块，赠送 whois 隐私保护<br>到 dnspod 绑定域名服务器，创建两个 A 绑定 IP，一个 CNAME 记录绑定域名<br><a href="https://www.namesilo.com/create_account.php" target="_blank" rel="external">https://www.namesilo.com/create_account.php</a></p><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置站点 _config.yml 使用next主题</p><blockquote><p>基础配置参考 <a href="http://theme-next.iissnan.com/" target="_blank" rel="external">http://theme-next.iissnan.com/</a></p></blockquote><p><del>#### 文章目录显示</del><br><del>npm i hexo-generator-json-content –save</del></p><h4 id="标签云-分类"><a href="#标签云-分类" class="headerlink" title="标签云, 分类"></a>标签云, 分类</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo new page tags</div><div class="line">hexo new page categories</div></pre></td></tr></table></figure><h4 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h4><p>注册添加disqus<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">disqus:</div><div class="line">  shortname: https-hgleagle-github-io # 修改next/_config.yml</div></pre></td></tr></table></figure></p><h4 id="RSS"><a href="#RSS" class="headerlink" title="RSS"></a>RSS</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cnpm install hexo-generator-feed</div></pre></td></tr></table></figure><h4 id="avatar、qrcode"><a href="#avatar、qrcode" class="headerlink" title="avatar、qrcode"></a>avatar、qrcode</h4><p>使用七牛图床，或者本地在 source 下创建 img 目录保存图片，修改_config.yml添加外链或路径</p><h4 id="阅读次数"><a href="#阅读次数" class="headerlink" title="阅读次数"></a>阅读次数</h4><p>注册leancloud 帐号，创建 Counter ，拷贝 appid、appkey 到下面配置, 安全中心添加 web 安全域<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">leancloud_visitors:</div><div class="line">  enable: true</div><div class="line">  app_id: xxx</div><div class="line">  app_key: xxx</div></pre></td></tr></table></figure></p><h4 id="搜索"><a href="#搜索" class="headerlink" title="搜索"></a>搜索</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 安装</div><div class="line">npm install --save hexo-generator-search</div><div class="line"></div><div class="line"><span class="meta">#</span> 修改站点_config.yml增加</div><div class="line">search:</div><div class="line">  path: search.xml</div><div class="line">  field: post</div><div class="line">  format: html</div><div class="line">  limit: 10000</div></pre></td></tr></table></figure><h4 id="Sitemap-for-SEO"><a href="#Sitemap-for-SEO" class="headerlink" title="Sitemap for SEO"></a>Sitemap for SEO</h4><blockquote><p>参考<br><a href="https://pengbinlee.github.io/Hexo-NexT-%E4%B8%BB%E9%A2%98%E7%9A%84-SEO%E4%BC%98%E5%8C%96/" target="_blank" rel="external">Hexo-NexT-主题的-SEO优化</a><br><a href="http://www.oneonecity.xyz/2016/12/16/Hexo%E5%8D%9A%E5%AE%A2%E6%94%B6%E5%BD%95%E7%99%BE%E5%BA%A6%E5%92%8C%E8%B0%B7%E6%AD%8C-%E5%9F%BA%E4%BA%8ENext%E4%B8%BB%E9%A2%98/" target="_blank" rel="external">Hexo博客收录百度和谷歌-基于Next主题</a></p></blockquote><ul><li>生成 sitemap 提交到 google、 baidu 进行站点验证，修改配置文件<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 安装</div><div class="line">cnpm install hexo-generator-sitemap</div><div class="line">cnpm install --save hexo-generator-baidu-sitemap</div><div class="line"></div><div class="line"><span class="meta">#</span> 修改站点config</div><div class="line"><span class="meta">#</span> 提交给谷歌搜素引擎，SEO优化开启配置是一样的</div><div class="line">sitemap:</div><div class="line">    path: sitemap.xml</div><div class="line"><span class="meta">#</span> 提交百度搜索引擎   </div><div class="line">baidusitemap:</div><div class="line">    path: baidusitemap.xml</div></pre></td></tr></table></figure></li></ul><blockquote><p>通过搜索引擎查找 site:jasonfly.me 检查是否被收录</p></blockquote><ul><li>添加 robots.txt 协议</li><li>修改 next 主题 siderbar.swig footer.swig 增加 <code>rel=&quot;external nofollow&quot;</code>，意思是告诉引擎这些是外链，不要爬取</li><li>默认 permalink 太长，缩短成 :title</li><li>修改 scaffolds 中 post.md 模板增加 keywords: description:</li></ul><h4 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h4>]]></content>
     
@@ -77,6 +104,8 @@
 &lt;p&gt;deploy实际实现如下工作&lt;br&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;cp -R public/* .deploy_git/&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;cd .deploy_git&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git add .&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git commit -m “update”&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git push origin master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
+    
+      <category term="工具" scheme="http://jasonfly.me/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
       <category term="hexo" scheme="http://jasonfly.me/tags/hexo/"/>
