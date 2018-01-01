@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[C语言值得注意的地方]]></title>
+    <url>%2FC%E8%AF%AD%E8%A8%80%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9%2F</url>
+    <content type="text"><![CDATA[阅读 宋劲杉 老师的 Linux C 编程一站式学习 总结 C 语言的一些特性。 声明和定义声明：变量声明、函数声明、类型声明。 分配存储空间的声明同时也是定义，不分配存储空间的声明不是定义。 凡是被多次声明的变量或函数，必须有且只有一个声明是定义的，如果有多个定义，或者一个定义都没有，链接器就无法完成链接。 定义一个变量，就是分配一块存储空间并给它命名; 给一个变量赋值，就是把一个值保存到这块存储空间。 初始化是一种特殊的声明，而不是一种赋值语句。 表达式任何表达式都用值和类型两个基本属性。 左值右值有些表达式可以表示存储位置和值，有些只能表示值。表达式所表示的存储位置称为左值 (lvalue)，允许放在等号左边，表达式的值称为右值 (rvalue) ，只能放在等号右边。如下 error : 12(a = b) = cminute + 1 = hour; 整数类型整型：char、int 型 副作用 (Side Effect)C 语言的函数可以有 Side Effect，是与数学函数在概念上的根本区别。比如 printf 通常不关心它的返回值，只是利用它所产生的打印的副作用。 void 设计原因从语法上规定没有返回值的函数调用表达式是 void 类型，有一个 void 类型的值，这样任何表达式都有值，不必考虑特殊情况，编译器的语法解析比较容易; 然后从语义上规定 void 类型的表达式不能参与运算，从而兼顾类语法上的一致和语义上的不矛盾。 运算符优先级后缀运算符包括后缀++、后缀–、结构体取成员.、 数组取下标[]，单目(或前缀)运算符包括前缀++、前缀–、正号+ 、负号-、逻辑非！。后缀运算符优先级最高，单目运算符仅次于后缀，比其它运算符都高。 ++count[2] 是对 count[2] 做前缀 ++ 运算。 数组数组类型做右值使用时，自动转换成指向数组首元素的指针。下面的写法是错误的。 12int a[5] = &#123; 4, 3, 2, 1 &#125;;int b[5] = a; /* error; incompatible types in assignment */ 在函数原型中，如果参数写成数组的形式，则该参数实际上是指针类型。 define 和枚举define 不仅可以定义常量，也可以定义更复杂的语法结构，宏定义，define 定义在预处理阶段处理，枚举在编译阶段处理。 结构体的成员名和变量名不在同一命名空间，枚举的成员名和变量名在同一命名空间。 123456789#include &lt;stdio.h&gt;enum coordinate_type &#123; RECTANGULAR = 1, POLAR &#125;;int main(void)&#123; int RECTANGULAR; printf("%d %d\n", RECTANGULAR, POLAR); /* 2 0 */ return 0;&#125; 返回值函数返回一个值相当预定义一个和返回值类型相同的临时变量并用 return 后面的表达式来初始化。 函数返回值不是左值，或者说函数调用表达式不能做左值。 1is_even(20) = 1; /* error */ 转义序列 \n 是在编译时处理，而转换说明在运行时调用 printf 函数处理的 1printf("character: %c\n", '&#125;'); Old Style C 风格并非所有函数声明包含完整的函数原型，如 12void threelines(); /* 没有指出参数类型和个数 */void main() &#123;&#125;]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C99语言新特性]]></title>
+    <url>%2FC99%E8%AF%AD%E8%A8%80%E6%96%B0%E7%89%B9%E6%80%A7%2F</url>
+    <content type="text"><![CDATA[阅读 宋劲杉 老师的 Linux C 编程一站式学习 后总结 C99 引入的新特性。 声明跟语句顺序C89 要求所有声明写在所有语句之前，而 C99 允许语句和声明按任意顺序排列，只要每个标识符遵循先声明后使用的原则就行。 变长数组 (Variable Length Array, VLA)正常数组类型的长度用一个整数常量表达式来指定。C99 允许在数组长度表达式中使用变量，称为变长数组。只能定义为局部变量而不能是全局变量。 Designated Initialization初始化稀疏结构体和稀疏数组很方便，结构体或数组中只有某一个或某几个成员需要初始化，其它成员都用 0 初始化，使用这个语法可以很方便的针对某个成员做初始化 (Memberwise Initialization) 。 123456789struct complex_struct &#123; double x, y;&#125; z1, z2;struct complex_struct z1 = &#123; .y = 4.0&#125;; /* 结构，z1.x=0.0, z1.y=4.0 */int count[4] = &#123; [2] = 3 &#125;; /* 数组 */int a[3][2] = &#123; [0][1] = 9, [2][1] = 8 &#125;; /* 多维数组 */struct complex_struct &#123; /* 嵌套方式 */ double x, y;&#125; a[4] = &#123; [0].x = 8.8 &#125;;]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[计算机编程思想总结]]></title>
+    <url>%2F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[宋劲杉 老师的 Linux C 编程一站式学习 是国人当中写的非常好的计算机书籍，豆瓣评分 9.3 ，非科班出生的程序员拿来入门非常好，后面部分关于程序原理的内容也适合工作多年的人进行查缺补漏。书籍囊括了程序设计基本思想和开发调试方法，以 Linux 平台为载体介绍 C 语言基础及程序工作原理，Linux 系统编程，对计算机组成、C 语言、操作系统、编译原理等课程知识达到融汇贯通。很难得图书还是开源的，链接 http://akaedu.github.io/book/index.html， 第二版 一站式学习 C 编程 删掉了 Linux 系统编程相关的内容，其它变化不大，推荐第一版。这篇总结图书中提到的编程思想及相关思维方法。 思维方法以概念为中心的阅读习惯每读一节就总结一套概念之间的关系图。比如下面的概念： 程序由指令组成，计算机只能执行低级语言的指令，高级语言执行前要先编译或解释，好处是平台无关性，平台是一种体系结构，是一种指令集，就是一种机器语言。 编程语言是一种形式语言，对应人类用的自然语言，形式语言有严格的语法 (Syntax) 规则，由符号 (Token) 和结构(Structure) 的规则组成。关于 Token 的规则称为词法 (Lexical) 规则，关于结构的规则称为语法 (Grammer)规则。分析句子结构的过程称为解析 (Parse)。解析完句子，理解句子的上下文，暗示的内容，是语义 (Semantic) 的范畴。形式语言和自然语言的区别：歧义性、冗余性、与字面意思的一致性。 最少例外原则 (Rules of Least Surprise)一个容易被用户接受的设计应该遵循最少例外原则。C 语言的设计非常优美，C++ 的设计非常负责，充满例外，饱受争议。 必要条件 (Necessary Condition)和充分条件 (Sufficient Condition)不要把必要条件当充分条件。 编程思想组合规则 (Composition)组合规则是理解语法规则的基础，根据语法规则任意组合，可以用简单的常量、变量、表达式、语句和声明搭建出任意复杂的程序。 递归 (Recursive) 和 迭代 (Iteration)如果定义一个概念要用到这个概念本身，它的定义是递归的。需要定义一个最关键的基础条件 (Base Case)，比如阶乘 (Factorial) 里 0 的阶乘等于 1。如果你相信你正在写的递归函数是正确的，并调用它，然后在此基础上写完这个递归函数，那么它就会是正确的，从而值得你相信它正确。 每次都有一点区别的重复工作称为迭代。 递归和循环是等价的，用循环能做的事用递归都能做，比如 LISP 语言只有递归而没有循环，编译器的实现用了大量递归。 递归例子：两个正整数的 a 和 b 的最大公约数 (GCD, Greatest Common Divisor) 使用 Euclid 算法，如果 a 除以 b 能整除， 则最大公约数是 b，否则，最大公约数等于 b 和 a%b 的最大公约数。 无限循环 (Infinite Loop) 的例子，n忽大忽小，著名的 3+1 问题： 1234567while (n != 1) &#123; if (n % 2 == 0) &#123; n = n / 2; &#125; else &#123; n = n * 3 + 1; &#125;&#125; 函数式编程 (Functional Programming) 和命令式编程 (Imperative Programming)函数式思路：整个递归调用过程中，虽然分配和释放了很多变量，但所有变量都只在初始化时赋值。 命令式思路：通过循环对变量多次赋值来达到同样的目的。C 语言主要用 Imperative 的方式。 抽象 (Abstraction)组合使得系统可以任意复杂，而抽象使得系统的复杂性是可以控制的，任何改动都局限在某一层，而不会波及整个系统。计算机科学家 Butler Lampson 说过：&quot;All problems in computer science can be solved by another level of indirection.&quot; 避免硬编码 (Hard coding)数据驱动的编程 (Data-driven Programming)数据代替代码，以打印星期几的代码为例：通过下表访问字符串组成的数组可以代替一堆 case 分支判断，把每个 case 里重复的代码 (printf 调用)提取出来。写代码最重要的是选择正确的数据结构来组织信息，设计控制流程和算法尚在其次，只要数据结构选择正确，其它代码自然而然变得容易理解和维护。Show me your flowcharts and conceal your tables, and I shall continue to be mystified. Show me your tables, and I won&#39;t usually need your flowcharts, they&#39;ll be obvious. 分而治之 (Divide-and-Conquer)举例，归并排序，时间复杂度O(nlgn)： Divide: 把长度为 n 的输入序列分成两个长度为 n/2 的子序列 Conquer: 对两个子序列分别采用归并排序 Combine: 将两个排序好的子序列合并成一个最终的排序序列 折半查找 (Binary Search)针对有序序列，每次把搜索范围缩小一半。 回溯 (Backtrack)探索问题的解时走进了死胡同，则需要退回来从另一条路继续探索。举例：基于堆栈的深度优先搜索 (DFS, Depth First Search)。 调试方法错误编译时错误、运行时错误 (Run-time) 、逻辑和语义错误。 增量式 (Incremental) 开发首先分析和分解问题，把大问题分解成小问题，再对小问题分别求解。这个过程在代码中体现函数的分层设计 (Stratify) ，底层函数解决小问题，上层函数通过调用底层函数解决更大的问题。 插入排序算法采用增量式的策略解决问题，每次添一个元素到已排序的子序列中，逐渐将整个数组排序完毕。时间复杂度O(n^2)。 打印语句函数里的 printf 语句类似脚手架 (Scaffold)，验证无误后就可以撤掉。把 Scaffolding 的代码注释掉。 Design by Contract (DbC)如果每个函数的文档都非常清楚地记录 Precondition、Maintenance、Postcondition 是什么，每个函数都可以独立编写和测试。 断言 (Assertion)发布时在包含 assert.h 之前定义一个 NDEBUG 宏，就可以禁用 assert.h 中的 assert 宏定义，或者编译时加上选项 -DNDEBUG 。 杂 switch 的语句块和循环结构的语句块没有本质区别：Duff’s Device 。]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>编程思想</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[打开浏览器输入URL时发生了哪些事]]></title>
     <url>%2F%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5URL%E6%97%B6%E5%8F%91%E7%94%9F%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B%2F</url>
     <content type="text"><![CDATA[一道经典的问题，考察对操作系统、网络、web 开发等知识。作为一个网络软件这块的开发人员，一直有兴趣总结下这方面知识，正好最近看了日本作家户根勤写的 网络是怎样连接的 ，补足我不少盲点，该书豆瓣评分 9.1，推荐阅读。这篇文章总结该书的关键知识点，并加入自己的理解。 总览 ​ 以 Linux 客户端及服务器为例： 在浏览器地址栏敲击键盘输入 URL，按下回车。 浏览器对输入的 URL 进行拆分解析，得到scheme:location:path:query:fragment，scheme 是 http 或者https 的走 HTTP 协议，location 一般是域名。 假设 location 是域名，浏览器首先查询本地主机缓存，如果找到对应域名的 IP 地址返回。如果没找到，发起DNS 域名解析请求得到 IP。 得到服务器 IP 地址后，浏览器发起 HTTP 请求，一般是 GET 方法，请求路径 path 下的资源。 HTTP 协议构造 request 报文，调用协议栈接口创建 TCP socket，传入连接的服务器端的 IP 跟端口，TCP 协议栈随机分配一个源端口，构造 TCP 报文，经过跟服务器的 TCP 三次握手建立起连接。 request 报文中间经过交换机、路由器、防火墙、代理等设备转发到达服务器，服务器端应用服务器解析报文得到请求的资源，如果是静态资源，直接访问对应路径下的文件构造 Response 回复给浏览器。如果是动态资源，经过路由传给运行的脚本语言处理，通过查数据库、计算等操作构造返回的数据，内容传给模板引擎转化为 HTML 格式，最终 Response 调用 HTTP 协议接口回复给客户端。 浏览器端收到 Response 里具体数据后进行渲染显示，如果 HTML 内还包含 img、js 等路径，浏览器会接着发起获取这些静态资源的请求。 浏览器经过 TCP 4次挥手断开与服务器端的连接。 TCP 三次握手 客户端创建 Socket 时，系统分配一个描述符进行标识，应用程序是通过描述符区分不同的套接字。 套接字中记录了用于控制通信操作的各种控制信息，协议栈则需要根据这些信息判断下一步的行动。netstat -anp 可查看这些信息。 客户端进行 connect 时发起连接，连接实际是通信双方交换控制信息，传入目的服务器 IP 跟端口，IP跟端口是识别对方套接字的机制，TCP 模块创建 TCP 头部信息，这时协议栈发送 SYN 控制位置 1 的 TCP 报文，同时序号以随机值作为初始值告诉服务器端。 服务器端预先创建好 socket，绑定监听的地址跟端口开始监听，当收到客户端的 SYN 报文时，记录客户端的IP 跟源端口，TCP 模块根据报文目的 IP 及 目的端口找到对应的 socket，并回复 SYN，ACK 控制位置 1 的报文。 客户端收到报文后回复 ACK 控制位置 1 的报文，跟服务器建立起连接，可以随时收发数据。]]></content>
@@ -20,9 +54,9 @@
         <category>嵌入式开发</category>
       </categories>
       <tags>
+        <tag>C</tag>
         <tag>lora</tag>
         <tag>OpenWRT</tag>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
