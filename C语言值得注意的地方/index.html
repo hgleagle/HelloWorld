@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="Jasonfly&#39;s blog">
 <meta property="og:description" content="阅读 宋劲杉 老师的 Linux C 编程一站式学习 总结 C 语言的一些特性。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-01T14:48:47.901Z">
+<meta property="og:updated_time" content="2018-01-13T07:46:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C语言值得注意的地方">
 <meta name="twitter:description" content="阅读 宋劲杉 老师的 Linux C 编程一站式学习 总结 C 语言的一些特性。">
@@ -438,8 +438,50 @@
 <h4 id="表达式"><a href="#表达式" class="headerlink" title="表达式"></a>表达式</h4><p>任何表达式都用值和类型两个基本属性。</p>
 <h4 id="左值右值"><a href="#左值右值" class="headerlink" title="左值右值"></a>左值右值</h4><p>有些表达式可以表示存储位置和值，有些只能表示值。表达式所表示的存储位置称为左值 (lvalue)，允许放在等号左边，表达式的值称为右值 (rvalue) ，只能放在等号右边。如下 error :</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(a = b) = c</div><div class="line">minute + <span class="number">1</span> = hour;</div></pre></td></tr></table></figure>
+<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>函数返回一个值相当预定义一个和返回值类型相同的临时变量并用 return 后面的表达式来初始化。</p>
+<p>函数返回值不是左值，或者说函数调用表达式不能做左值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">is_even(<span class="number">20</span>) = <span class="number">1</span>; <span class="comment">/* error */</span></div></pre></td></tr></table></figure>
+<p>转义序列 <code>\n</code> 是在编译时处理，而转换说明在运行时调用 <code>printf</code> 函数处理的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">printf</span>(<span class="string">"character: %c\n"</span>, <span class="string">'&#125;'</span>);</div></pre></td></tr></table></figure>
 <h4 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h4><p>整型：char、int 型</p>
-<h4 id="副作用-Side-Effect"><a href="#副作用-Side-Effect" class="headerlink" title="副作用 (Side Effect)"></a>副作用 (Side Effect)</h4><p>C 语言的函数可以有 Side Effect，是与数学函数在概念上的根本区别。比如 <code>printf</code> 通常不关心它的返回值，只是利用它所产生的打印的副作用。</p>
+<h4 id="副作用-Side-Effect"><a href="#副作用-Side-Effect" class="headerlink" title="副作用 (Side Effect)"></a>副作用 (Side Effect)</h4><p>改变计算机存储单元⾥的数据或者做输⼊输出操作都算 Side Effect，包括如下几个：</p>
+<ul>
+<li><p>函数有副作用，与数学函数在概念上的根本区别。比如 <code>printf</code> 通常不关心它的返回值，只是利用它所产生的打印的副作用。或者在函数中修改某全局变量也是一种 Side Effect。</p>
+</li>
+<li><p>赋值运算符，把表达式 <code>a = b</code> 看做函数，返回值既是 a 又是 b 的值，副作用是 a 的值被改变。</p>
+</li>
+<li><p>前缀或后缀运算符 (++ –)，把表达式 <code>++i</code> 看作函数调用，传入一个参数返回值等于参数加 1，副作用是 i 的值加 1。</p>
+</li>
+<li><p>复合赋值运算符 (*= /= %= += -= &lt;&lt;= &gt;&gt;= &amp;= ^= |=)，  <code>a += 1</code> 相当于 <code>a = a + 1</code>，但有⼀点细微的差别，前者对表达式 a 只求值⼀次，⽽后者求值两次。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">a[foo()] += <span class="number">1</span>； a[foo()] = a[foo()] + <span class="number">1</span>； <span class="comment">// 如果 foo() 函数调⽤有Side Effect，⽐如会打印⼀条消息，那么前者只打印⼀次，⽽后者打印两次。</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Sequence-Point"><a href="#Sequence-Point" class="headerlink" title="Sequence Point"></a>Sequence Point</h4><p>C标准规定代码中的某些点是 Sequence Point，当执⾏到⼀个 Sequence Point 时，在此之前的 Side Effect 必须全部作⽤完毕，在此之后的 Side Effect 必须⼀个都没发⽣。⾄于两个 Sequence Point 之间的多个 Side Effect 哪个先发⽣哪个后发⽣则没有规定，编译器可以任意选择各 Side Effect 的作⽤顺序。如下例子结果 undefined，跟编译器实现相关。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</div><div class="line">a = (++a)+(++a)+(++a)+(++a);</div><div class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, i++ * i++);</div></pre></td></tr></table></figure>
+<p>包含如下几种 Sequence Point:</p>
+<ul>
+<li><p>调⽤⼀个函数时，在所有准备⼯作做完之后、函数调⽤开始之前是Sequence Point。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">foo(f(), g());  <span class="comment">// f() g()执行顺序未知</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>条件运算符 ?:、逗号运算符、逻辑与 &amp;&amp;、逻辑或 || 的第⼀个操作数求值之后是 Sequence Point。</p>
+</li>
+<li><p>在⼀个完整的声明末尾是Sequence Point，所谓完整的声明是指这个声明不是另外⼀个声明的⼀部分。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a[<span class="number">10</span>], b[<span class="number">20</span>]; <span class="comment">// 在 a[10] 末尾是Sequence Point，在 b[20] 末尾也是</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>在⼀个完整的表达式末尾是Sequence Point，所谓完整的表达式是指这个表达式不是另外⼀个表达式的⼀部分。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">f(); g(); <span class="comment">// f()在g()之前先执行</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>在库函数即将返回时是Sequence Point。</p>
+</li>
+</ul>
+<p>写表达式应遵循的原则：</p>
+<ol>
+<li><p>在两个 Sequence Point 之间，同⼀个变量的值只允许被改变⼀次 。</p>
+</li>
+<li><p>如果在两个 Sequence Point 之间既要读⼀个变量的值⼜要改它的值，只有在读写顺序确定的情况下才可以这么写。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = (++a)+(++a)+(++a)+(++a); <span class="comment">// error </span></div><div class="line">a[i++] = i; <span class="comment">// error</span></div><div class="line"> i = i + <span class="number">1</span>; <span class="comment">// 读写顺序确定，ok</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
 <h4 id="void-设计原因"><a href="#void-设计原因" class="headerlink" title="void 设计原因"></a>void 设计原因</h4><p>从语法上规定没有返回值的函数调用表达式是 void 类型，有一个 void 类型的值，这样任何表达式都有值，不必考虑特殊情况，编译器的语法解析比较容易; 然后从语义上规定 void 类型的表达式不能参与运算，从而兼顾类语法上的一致和语义上的不矛盾。</p>
 <h4 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h4><p>后缀运算符包括后缀++、后缀–、结构体取成员.、 数组取下标[]，单目(或前缀)运算符包括前缀++、前缀–、正号+ 、负号-、逻辑非！。后缀运算符优先级最高，单目运算符仅次于后缀，比其它运算符都高。</p>
 <p><code>++count[2]</code> 是对 <code>count[2]</code> 做前缀 ++ 运算。</p>
@@ -449,13 +491,12 @@
 <h4 id="define-和枚举"><a href="#define-和枚举" class="headerlink" title="define 和枚举"></a>define 和枚举</h4><p>define 不仅可以定义常量，也可以定义更复杂的语法结构，宏定义，define 定义在预处理阶段处理，枚举在编译阶段处理。</p>
 <p>结构体的成员名和变量名不在同一命名空间，枚举的成员名和变量名在同一命名空间。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="keyword">enum</span> coordinate_type &#123; RECTANGULAR = <span class="number">1</span>, POLAR &#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">int</span> RECTANGULAR;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, RECTANGULAR, POLAR);  <span class="comment">/* 2 0 */</span></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h4><p>函数返回一个值相当预定义一个和返回值类型相同的临时变量并用 return 后面的表达式来初始化。</p>
-<p>函数返回值不是左值，或者说函数调用表达式不能做左值。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">is_even(<span class="number">20</span>) = <span class="number">1</span>; <span class="comment">/* error */</span></div></pre></td></tr></table></figure>
-<p>转义序列 <code>\n</code> 是在编译时处理，而转换说明在运行时调用 <code>printf</code> 函数处理的</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">printf</span>(<span class="string">"character: %c\n"</span>, <span class="string">'&#125;'</span>);</div></pre></td></tr></table></figure>
 <h4 id="Old-Style-C-风格"><a href="#Old-Style-C-风格" class="headerlink" title="Old Style C 风格"></a>Old Style C 风格</h4><p>并非所有函数声明包含完整的函数原型，如</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">threelines</span><span class="params">()</span></span>;  <span class="comment">/* 没有指出参数类型和个数 */</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<h4 id="sizeof"><a href="#sizeof" class="headerlink" title="sizeof"></a>sizeof</h4><p><code>sizeof</code> 是⼀个特殊的运算符，有两种形式：<code>sizeof 表达式</code> 和 <code>sizeof(类型名)</code> 。</p>
+<p><code>sizeof 表达式</code> 中的⼦表达式并不求值，⽽只是根据类型转换规则求得⼦表达式的类型，然后把这种类型所占的字节数作为整个表达式的值。 <code>sizeof(表达式)</code> 形式⾥的括号和 <code>return(1);</code> 的括号⼀样，不起任何作⽤。</p>
+<p><code>sizeof(类型名)</code> 的括号是必须写的，整个表达式的值也是这种类型所占的字节数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a[<span class="number">12</span>];</div><div class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span> a/<span class="keyword">sizeof</span> a[<span class="number">0</span>]);</div></pre></td></tr></table></figure>
       
     </div>
     
@@ -684,7 +725,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明和定义"><span class="nav-number">1.</span> <span class="nav-text">声明和定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表达式"><span class="nav-number">2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左值右值"><span class="nav-number">3.</span> <span class="nav-text">左值右值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整数类型"><span class="nav-number">4.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#副作用-Side-Effect"><span class="nav-number">5.</span> <span class="nav-text">副作用 (Side Effect)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#void-设计原因"><span class="nav-number">6.</span> <span class="nav-text">void 设计原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符优先级"><span class="nav-number">7.</span> <span class="nav-text">运算符优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">8.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#define-和枚举"><span class="nav-number">9.</span> <span class="nav-text">define 和枚举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回值"><span class="nav-number">10.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Old-Style-C-风格"><span class="nav-number">11.</span> <span class="nav-text">Old Style C 风格</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#声明和定义"><span class="nav-number">1.</span> <span class="nav-text">声明和定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表达式"><span class="nav-number">2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#左值右值"><span class="nav-number">3.</span> <span class="nav-text">左值右值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回值"><span class="nav-number">4.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整数类型"><span class="nav-number">5.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#副作用-Side-Effect"><span class="nav-number">6.</span> <span class="nav-text">副作用 (Side Effect)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sequence-Point"><span class="nav-number">7.</span> <span class="nav-text">Sequence Point</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#void-设计原因"><span class="nav-number">8.</span> <span class="nav-text">void 设计原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运算符优先级"><span class="nav-number">9.</span> <span class="nav-text">运算符优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">10.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#define-和枚举"><span class="nav-number">11.</span> <span class="nav-text">define 和枚举</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Old-Style-C-风格"><span class="nav-number">12.</span> <span class="nav-text">Old Style C 风格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sizeof"><span class="nav-number">13.</span> <span class="nav-text">sizeof</span></a></li></ol></div>
             
 
           </div>
