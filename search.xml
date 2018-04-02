@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Ubuntu下一个接口同时配置静态IP跟dhcp]]></title>
+    <url>%2FUbuntu%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E5%90%8C%E6%97%B6%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81IP%E8%B7%9Fdhcp%2F</url>
+    <content type="text"><![CDATA[电脑放公司使用接网线发现只能使用 DHCP 获取动态地址，由于本地测试需要，希望能够配置使用第二个私有的 IP 地址，同时不影响原来 DHCP 获取的 IP。 首先打开接口文件， 1sudo vim /etc/network/interfaces 编辑添加配置，:wq 保存退出。 12345678910auto loiface lo inet loopbackauto enp0s25 # 网卡开机自动挂载iface enp0s25 inet dhcp # enp0s25 配置成 DHCP 动态获取 IPauto enp0s25:0iface enp0s25:0 inet static # enp0s25:0 这里用来配置网卡子接口的静态 IP地址address 192.168.0.53netmask 255.255.255.0 上面 enp0s25 是我的有线网口名称，需要通过 ifconfig 查询改成自己电脑的网口名称。 重启网络服务 1sudo systemctl restart networking.service 通过 ping 验证 IP 是否生效。]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux下高效率开发环境搭建]]></title>
+    <url>%2FLinux%E4%B8%8B%E9%AB%98%E6%95%88%E7%8E%87%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"><![CDATA[入手ThinkPad X250 后，增加了 4G 内存条，128G SSD，安装 Ubuntu 16.04 并使用已经快一年了， 总结下常用的高效率软件。 开发工具VIM目前写 C、Python 代码必备，Java 还是用 IntelliJ IDEA 。安装 YouCompleteMe 插件需要升级到 VIM 8.0 以上。 12345678910git clone https://github.com/vim/vim.git./configure --with-features=huge \ --enable-multibyte \ --enable-rubyinterp=yes \ --enable-python3interp=yes \ --with-python3-config-dir=/usr/lib/python3.5/config \ --enable-perlinterp=yes \ --enable-luainterp=yes \ --enable-gui=gtk2 --enable-cscope --prefix=/usrmake VIMRUNTIMEDIR=/usr/share/vim/vim80 VIM 插件配置自己摸索一段时间后，改成直接参考 k-vim 的配置针对自己的习惯做了些修订，这是我 fork 出来的路径如下 k-vim 。 Tmux终端下分屏利器，插件 tmux-yank 直接拷贝当前输入命令和当前目录。 oh-my-zshIntelliJ IDEA命令行工具mycli连接 MySQL，各种提示补全 SQL 用起来很舒服。 trans谷歌出品的 terminal 端的翻译软件，网易有道词典客户端经常出问题，已放弃，用这个替代。 tldr、cheat经常忘记命令各种参数怎么用，可以用查询常见用法很方便，支持的命令及显示的用法有所不一样，两个结合起来用。 编辑软件TyporaMarkdown 编辑利器，免费，支持 windows/linux，所见即所得，支持 [GitHub Flavored Markdown][GFM]。 Hexo搭建静态 Blog 的工具，使用 NEXT 主题，在命令行下即可生成文档并部署到云端，免费托管在 Github Pages 上面。 Nutstore我是坚果云付费用户，良心产品，支持 Linux ，同步速度快。 Web EvernoteLinux 下印象笔记只能用网页版，个人感觉体验不错，已经可以替代客户端。 Chrome1 12]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[C语言值得注意的地方]]></title>
     <url>%2FC%E8%AF%AD%E8%A8%80%E5%80%BC%E5%BE%97%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9%2F</url>
     <content type="text"><![CDATA[阅读 宋劲杉 老师的 Linux C 编程一站式学习 总结 C 语言的一些特性。 声明和定义声明：变量声明、函数声明、类型声明。 分配存储空间的声明同时也是定义，不分配存储空间的声明不是定义。 凡是被多次声明的变量或函数，必须有且只有一个声明是定义的，如果有多个定义，或者一个定义都没有，链接器就无法完成链接。 定义一个变量，就是分配一块存储空间并给它命名; 给一个变量赋值，就是把一个值保存到这块存储空间。 初始化是一种特殊的声明，而不是一种赋值语句。 表达式任何表达式都用值和类型两个基本属性。 左值右值有些表达式可以表示存储位置和值，有些只能表示值。表达式所表示的存储位置称为左值 (lvalue)，允许放在等号左边，表达式的值称为右值 (rvalue) ，只能放在等号右边。如下 error : 12(a = b) = cminute + 1 = hour; 返回值函数返回一个值相当预定义一个和返回值类型相同的临时变量并用 return 后面的表达式来初始化。 函数返回值不是左值，或者说函数调用表达式不能做左值。 1is_even(20) = 1; /* error */ 转义序列 \n 是在编译时处理，而转换说明在运行时调用 printf 函数处理的。 1printf("character: %c\n", '&#125;'); 整数类型整型：char、int 型 副作用 (Side Effect)改变计算机存储单元⾥的数据或者做输⼊输出操作都算 Side Effect，包括如下几个： 函数有副作用，与数学函数在概念上的根本区别。比如 printf 通常不关心它的返回值，只是利用它所产生的打印的副作用。或者在函数中修改某全局变量也是一种 Side Effect。 赋值运算符，把表达式 a = b 看做函数，返回值既是 a 又是 b 的值，副作用是 a 的值被改变。 前缀或后缀运算符 (++ –)，把表达式 ++i 看作函数调用，传入一个参数返回值等于参数加 1，副作用是 i 的值加 1。 复合赋值运算符 (*= /= %= += -= &lt;&lt;= &gt;&gt;= &amp;= ^= |=)， a += 1 相当于 a = a + 1，但有⼀点细微的差别，前者对表达式 a 只求值⼀次，⽽后者求值两次。 1a[foo()] += 1； a[foo()] = a[foo()] + 1； // 如果 foo() 函数调⽤有Side Effect，⽐如会打印⼀条消息，那么前者只打印⼀次，⽽后者打印两次。 Sequence PointC标准规定代码中的某些点是 Sequence Point，当执⾏到⼀个 Sequence Point 时，在此之前的 Side Effect 必须全部作⽤完毕，在此之后的 Side Effect 必须⼀个都没发⽣。⾄于两个 Sequence Point 之间的多个 Side Effect 哪个先发⽣哪个后发⽣则没有规定，编译器可以任意选择各 Side Effect 的作⽤顺序。如下例子结果 undefined，跟编译器实现相关。 123int a = 0;a = (++a)+(++a)+(++a)+(++a);printf("%d\n", i++ * i++); 包含如下几种 Sequence Point: 调⽤⼀个函数时，在所有准备⼯作做完之后、函数调⽤开始之前是Sequence Point。 1foo(f(), g()); // f() g()执行顺序未知 条件运算符 ?:、逗号运算符、逻辑与 &amp;&amp;、逻辑或 || 的第⼀个操作数求值之后是 Sequence Point。 在⼀个完整的声明末尾是Sequence Point，所谓完整的声明是指这个声明不是另外⼀个声明的⼀部分。 1int a[10], b[20]; // 在 a[10] 末尾是Sequence Point，在 b[20] 末尾也是 在⼀个完整的表达式末尾是Sequence Point，所谓完整的表达式是指这个表达式不是另外⼀个表达式的⼀部分。 1f(); g(); // f()在g()之前先执行 在库函数即将返回时是Sequence Point。 写表达式应遵循的原则： 在两个 Sequence Point 之间，同⼀个变量的值只允许被改变⼀次 。 如果在两个 Sequence Point 之间既要读⼀个变量的值⼜要改它的值，只有在读写顺序确定的情况下才可以这么写。 123a = (++a)+(++a)+(++a)+(++a); // error a[i++] = i; // error i = i + 1; // 读写顺序确定，ok void 设计原因从语法上规定没有返回值的函数调用表达式是 void 类型，有一个 void 类型的值，这样任何表达式都有值，不必考虑特殊情况，编译器的语法解析比较容易; 然后从语义上规定 void 类型的表达式不能参与运算，从而兼顾类语法上的一致和语义上的不矛盾。 运算符优先级后缀运算符包括后缀++、后缀–、结构体取成员.、 数组取下标[]，单目(或前缀)运算符包括前缀++、前缀–、正号+ 、负号-、逻辑非！。后缀运算符优先级最高，单目运算符仅次于后缀，比其它运算符都高。 ++count[2] 是对 count[2] 做前缀 ++ 运算。 数组数组类型做右值使用时，自动转换成指向数组首元素的指针。下面的写法是错误的。 12int a[5] = &#123; 4, 3, 2, 1 &#125;;int b[5] = a; /* error; incompatible types in assignment */ 在函数原型中，如果参数写成数组的形式，则该参数实际上是指针类型。 define 和枚举define 不仅可以定义常量，也可以定义更复杂的语法结构，宏定义，define 定义在预处理阶段处理，枚举在编译阶段处理。 结构体的成员名和变量名不在同一命名空间，枚举的成员名和变量名在同一命名空间。 123456789#include &lt;stdio.h&gt;enum coordinate_type &#123; RECTANGULAR = 1, POLAR &#125;;int main(void)&#123; int RECTANGULAR; printf("%d %d\n", RECTANGULAR, POLAR); /* 2 0 */ return 0;&#125; Old Style C 风格并非所有函数声明包含完整的函数原型，如 12void threelines(); /* 没有指出参数类型和个数 */void main() &#123;&#125; sizeofsizeof 是⼀个特殊的运算符，有两种形式：sizeof 表达式 和 sizeof(类型名) 。 sizeof 表达式 中的⼦表达式并不求值，⽽只是根据类型转换规则求得⼦表达式的类型，然后把这种类型所占的字节数作为整个表达式的值。 sizeof(表达式) 形式⾥的括号和 return(1); 的括号⼀样，不起任何作⽤。 sizeof(类型名) 的括号是必须写的，整个表达式的值也是这种类型所占的字节数。 12int a[12];printf("%d\n", sizeof a/sizeof a[0]);]]></content>
