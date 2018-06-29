@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[打开浏览器输入URL时发生了哪些事]]></title>
-    <url>%2F%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5URL%E6%97%B6%E5%8F%91%E7%94%9F%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B%2F</url>
-    <content type="text"><![CDATA[一道经典的问题，考察对操作系统、网络、web 开发等知识。作为一个网络软件这块的开发人员，一直有兴趣总结下这方面知识，正好最近看了日本作家户根勤写的 网络是怎样连接的 ，补足我不少盲点，该书豆瓣评分 9.1，推荐阅读。这篇文章总结该书的关键知识点，并加入自己的理解。 总览 ​ 以 Linux 客户端及服务器为例： 在浏览器地址栏敲击键盘输入 URL，按下回车。 浏览器对输入的 URL 进行拆分解析，得到scheme:location:path:query:fragment，scheme 是 http 或者https 的走 HTTP 协议，location 一般是域名。 假设 location 是域名，浏览器首先查询本地主机缓存，如果找到对应域名的 IP 地址返回。如果没找到，发起DNS 域名解析请求得到 IP。 得到服务器 IP 地址后，浏览器发起 HTTP 请求，一般是 GET 方法，请求路径 path 下的资源。 HTTP 协议构造 request 报文，调用协议栈接口创建 TCP socket，传入连接的服务器端的 IP 跟端口，TCP 协议栈随机分配一个源端口，构造 TCP 报文，经过跟服务器的 TCP 三次握手建立起连接。 request 报文中间经过交换机、路由器、防火墙、代理等设备转发到达服务器，服务器端应用服务器解析报文得到请求的资源，如果是静态资源，直接访问对应路径下的文件构造 Response 回复给浏览器。如果是动态资源，经过路由传给运行的脚本语言处理，通过查数据库、计算等操作构造返回的数据，内容传给模板引擎转化为 HTML 格式，最终 Response 调用 HTTP 协议接口回复给客户端。 浏览器端收到 Response 里具体数据后进行渲染显示，如果 HTML 内还包含 img、js 等路径，浏览器会接着发起获取这些静态资源的请求。 浏览器经过 TCP 4次挥手断开与服务器端的连接。 TCP 三次握手 客户端创建 Socket 时，系统分配一个描述符进行标识，应用程序是通过描述符区分不同的套接字。 套接字中记录了用于控制通信操作的各种控制信息，协议栈则需要根据这些信息判断下一步的行动。netstat -anp 可查看这些信息。 客户端进行 connect 时发起连接，连接实际是通信双方交换控制信息，传入目的服务器 IP 跟端口，IP跟端口是识别对方套接字的机制，TCP 模块创建 TCP 头部信息，这时协议栈发送 SYN 控制位置 1 的 TCP 报文，同时序号以随机值作为初始值告诉服务器端。 服务器端预先创建好 socket，绑定监听的地址跟端口开始监听，当收到客户端的 SYN 报文时，记录客户端的IP 跟源端口，TCP 模块根据报文目的 IP 及 目的端口找到对应的 socket，并回复 SYN，ACK 控制位置 1 的报文。 客户端收到报文后回复 ACK 控制位置 1 的报文，跟服务器建立起连接，可以随时收发数据。]]></content>
+    <title><![CDATA[X-Y问题]]></title>
+    <url>%2FX-Y%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[本文翻译自 http://xyproblem.info/，是一篇关于提问智慧的经典文章。]]></content>
       <categories>
-        <category>读书笔记</category>
+        <category>翻译</category>
       </categories>
       <tags>
-        <tag>web</tag>
-        <tag>networking</tag>
+        <tag>提问</tag>
       </tags>
   </entry>
   <entry>
@@ -23,6 +22,18 @@
         <tag>C</tag>
         <tag>lora</tag>
         <tag>OpenWRT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[打开浏览器输入URL时发生了哪些事]]></title>
+    <url>%2F%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BE%93%E5%85%A5URL%E6%97%B6%E5%8F%91%E7%94%9F%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B%2F</url>
+    <content type="text"><![CDATA[一道经典的问题，考察对操作系统、网络、web 开发等知识。作为一个网络软件这块的开发人员，一直有兴趣总结下这方面知识，正好最近看了日本作家户根勤写的 网络是怎样连接的 ，补足我不少盲点，该书豆瓣评分 9.1，推荐阅读。这篇文章总结该书的关键知识点，并加入自己的理解。 总览 ​ 以 Linux 客户端及服务器为例： 在浏览器地址栏敲击键盘输入 URL，按下回车。 浏览器对输入的 URL 进行拆分解析，得到scheme:location:path:query:fragment，scheme 是 http 或者https 的走 HTTP 协议，location 一般是域名。 假设 location 是域名，浏览器首先查询本地主机缓存，如果找到对应域名的 IP 地址返回。如果没找到，发起DNS 域名解析请求得到 IP。 得到服务器 IP 地址后，浏览器发起 HTTP 请求，一般是 GET 方法，请求路径 path 下的资源。 HTTP 协议构造 request 报文，调用协议栈接口创建 TCP socket，传入连接的服务器端的 IP 跟端口，TCP 协议栈随机分配一个源端口，构造 TCP 报文，经过跟服务器的 TCP 三次握手建立起连接。 request 报文中间经过交换机、路由器、防火墙、代理等设备转发到达服务器，服务器端应用服务器解析报文得到请求的资源，如果是静态资源，直接访问对应路径下的文件构造 Response 回复给浏览器。如果是动态资源，经过路由传给运行的脚本语言处理，通过查数据库、计算等操作构造返回的数据，内容传给模板引擎转化为 HTML 格式，最终 Response 调用 HTTP 协议接口回复给客户端。 浏览器端收到 Response 里具体数据后进行渲染显示，如果 HTML 内还包含 img、js 等路径，浏览器会接着发起获取这些静态资源的请求。 浏览器经过 TCP 4次挥手断开与服务器端的连接。 TCP 三次握手 客户端创建 Socket 时，系统分配一个描述符进行标识，应用程序是通过描述符区分不同的套接字。 套接字中记录了用于控制通信操作的各种控制信息，协议栈则需要根据这些信息判断下一步的行动。netstat -anp 可查看这些信息。 客户端进行 connect 时发起连接，连接实际是通信双方交换控制信息，传入目的服务器 IP 跟端口，IP跟端口是识别对方套接字的机制，TCP 模块创建 TCP 头部信息，这时协议栈发送 SYN 控制位置 1 的 TCP 报文，同时序号以随机值作为初始值告诉服务器端。 服务器端预先创建好 socket，绑定监听的地址跟端口开始监听，当收到客户端的 SYN 报文时，记录客户端的IP 跟源端口，TCP 模块根据报文目的 IP 及 目的端口找到对应的 socket，并回复 SYN，ACK 控制位置 1 的报文。 客户端收到报文后回复 ACK 控制位置 1 的报文，跟服务器建立起连接，可以随时收发数据。]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>networking</tag>
       </tags>
   </entry>
   <entry>
